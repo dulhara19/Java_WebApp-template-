@@ -1,7 +1,9 @@
 <h5>Java Web Application</h5>
+
 Welcome to my Java web application project! This project is a personal endeavor aimed at providing a solid foundation for dynamic web applications using Java technologies. Whether you're exploring web development or looking for a reliable framework to build upon, this application is designed to be versatile and easy to extend.
 
 <b>Features</b>
+
 Scalable Architecture: Built on Java EE for scalability and performance.
 Customizable: Easily adaptable with modular components and a clear structure.
 Open Source: The entire source code is available for you to explore, modify, and freely use in your projects.
