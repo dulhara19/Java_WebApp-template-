@@ -12,6 +12,7 @@ Getting Started
 To get started with the project, clone the repository and follow the setup instructions in the README file. Feel free to explore the codebase, contribute enhancements, or integrate it into your own projects. Your feedback and contributions are highly appreciated!
 
 <b>Contributing</b>
+
 While I am working solo on this project, I welcome feedback and suggestions. If you have ideas for new features or find a bug, please don't hesitate to reach out or fork the repository and submit a pull request.
 
 Happy coding!
