@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>register</servlet-name>
-        <servlet-class>register</servlet-class>
+        <servlet-class>loginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>daoServlet</servlet-name>

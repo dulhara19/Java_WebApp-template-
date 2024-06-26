@@ -1,4 +1,6 @@
 
+<!-- comment- this is the registration form where user can enter their username and password -->
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

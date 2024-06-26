@@ -1,3 +1,4 @@
+<!-- this is login page where the user can enter their password and name  -->
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,10 +12,13 @@
 <body>
     <div class="container">
         <h1>Login</h1>
-        <form action="loginServlet" method="post">
+        
+        <!--this will call (loginServlet)  -->
+        
+        <form action="loginServlet" method="post">     
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="name" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
