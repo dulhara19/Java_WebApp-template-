@@ -1,4 +1,4 @@
-<h5>Java Web Application</h5>
+<h2>Java Web Application</h2>
 
 Welcome to my Java web application project! This project is a personal endeavor aimed at providing a solid foundation for dynamic web applications using Java technologies. Whether you're exploring web development or looking for a reliable framework to build upon, this application is designed to be versatile and easy to extend.
 
