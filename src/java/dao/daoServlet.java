@@ -103,10 +103,14 @@ public class daoServlet extends HttpServlet {
      // ResultSet rs= st.executeQuery();
       
       
-      int rows=st.executeUpdate();
+      int rows=st.executeUpdate(); //Using executeQuery for Non-SELECT Statements:
+                                   //Make sure to use executeUpdate for any statement 
+                                   //that does not return a result set.
+                                   
+       // check affected raw is greated than 0, then we have successfully updated the db                            
       if( rows>0){
-       
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("index.jsp"); 
+            
        }
      
       else{
