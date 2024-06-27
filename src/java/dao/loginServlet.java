@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
+
 
 
 @WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
@@ -25,7 +28,7 @@ public class loginServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
-            out.println("<head>");
+            out.println("<head>"); 
             out.println("<title>Servlet loginServlet</title>");
             out.println("</head>");
             out.println("<body>");
@@ -47,9 +50,11 @@ public class loginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
+         response.setContentType("text/html;charset=UTF-8");
+         
          PrintWriter out= response.getWriter();
-         String lname= request.getParameter("name");    /* retrive values from user*/
+         
+         String lname= request.getParameter("username");    /* retrive values from user*/
          String lpassword= request.getParameter("password");
          
          
@@ -75,16 +80,20 @@ public class loginServlet extends HttpServlet {
             
             // creating resultset           
             ResultSet rs= st.executeQuery();
-            
-            
-           
+      
            // Check if the result set has any rows and matching pass and name
             if (rs.next()) {
+                
                 // If valid credentials, redirect to success page
-                response.sendRedirect("index.html");
+                response.sendRedirect("index.jsp");
+                
+                
             } else {
-                // If invalid credentials, redirect to error page
-                response.sendRedirect("loginPg.jsp");
+                
+                // If invalid credentials, redirect to error page and show alert
+                  request.setAttribute("errorMessage", "Invalid username or Password");
+                  request.getRequestDispatcher("registerlogin.jsp").forward(request, response);
+                
             }
            
         } catch(ClassNotFoundException | SQLException e){
