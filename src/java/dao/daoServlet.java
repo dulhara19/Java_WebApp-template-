@@ -72,10 +72,10 @@ public class daoServlet extends HttpServlet {
         
         // define sql query
         String sql= "INSERT INTO clientname (cname,pass) VALUES (?,?)";
-        String sqladmin= "INSERT INTO admindata (name,email,phone,adminpass) VALUES (?,?,?,?)";
+        String sqladmin= "INSERT INTO adminrequest (name,email,phone,adminpass) VALUES (?,?,?,?)";
         
         // Check the value of the checkbox
-        if ( checkbox.equals("on")) {
+        if ( checkbox != null) {
             
             
             // Checkbox is checked
@@ -108,6 +108,7 @@ public class daoServlet extends HttpServlet {
        }
      
       else{
+          
       response.sendRedirect("registerlogin.jsp");
        }
       

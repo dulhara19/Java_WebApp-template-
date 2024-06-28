@@ -35,7 +35,7 @@
                             </div>
                             
                             <div class="form-group form-check">
-                               <input type="checkbox" class="form-check-input" id="checkbox" name="checkbox" required>
+                               <input type="checkbox" class="form-check-input" id="checkbox" name="checkbox" >
                                 <label class="form-check-label" for="terms">I want to become an ADMIN</label>
                             </div>
                             
