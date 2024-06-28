@@ -33,6 +33,12 @@
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
+                            
+                            <div class="form-group form-check">
+                               <input type="checkbox" class="form-check-input" id="checkbox" name="checkbox" required>
+                                <label class="form-check-label" for="terms">I want to become an ADMIN</label>
+                            </div>
+                            
                             <button type="submit" class="btn btn-primary btn-block">Register</button>
                             <p class="text-center mt-3">Already have an account? <a href="registerlogin.jsp" class="btn btn-secondary btn-block">Login</a></p>
                         </form>

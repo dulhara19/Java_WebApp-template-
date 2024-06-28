@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServlet;  
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -60,6 +60,7 @@ public class daoServlet extends HttpServlet {
         
          String name= request.getParameter("name");
          String pass= request.getParameter("password");
+         String checkbox = request.getParameter("checkbox");
          String email= request.getParameter("email"); // not used yet
          String phone= request.getParameter("phone"); // not used yet
          
@@ -71,9 +72,57 @@ public class daoServlet extends HttpServlet {
         
         // define sql query
         String sql= "INSERT INTO clientname (cname,pass) VALUES (?,?)";
+        String sqladmin= "INSERT INTO admindata (name,email,phone,adminpass) VALUES (?,?,?,?)";
         
+        // Check the value of the checkbox
+        if ( checkbox.equals("on")) {
+            
+            
+            // Checkbox is checked
+            //================================
+           try{
+  
+      Class.forName("com.mysql.cj.jdbc.Driver");
+      
+      Connection con= DriverManager.getConnection(jdbcurl,dbuser,dbpass);   
+      
+      PreparedStatement st= con.prepareStatement(sqladmin);
+       
+       st.setString(1,name);
+       st.setString(2,email);
+       st.setString(3,phone);
+       st.setString(4,pass);
+      
+      
+     // ResultSet rs= st.executeQuery();
+      
+      
+      int rows=st.executeUpdate(); //Using executeQuery for Non-SELECT Statements:
+                                   //Make sure to use executeUpdate for any statement 
+                                   //that does not return a result set.
+                                  
+       // check affected raw is greated than 0, then we have successfully updated the db                            
+      if( rows>0){
+            response.sendRedirect("index.jsp"); 
+            
+       }
+     
+      else{
+      response.sendRedirect("registerlogin.jsp");
+       }
+      
+    }
+    catch(ClassNotFoundException | SQLException e){
+            out.println("<html><body>");
+            out.println("<h1>Error: " + e.getMessage() + "</h1>");
+            out.println("</body></html>");
+                  }  
+            //========================
+        } 
+          
 
-    try{
+        else{
+        try{
         // check if name or passwords are empty
          if (name.isEmpty() && pass.isEmpty()) { 
              
@@ -107,6 +156,10 @@ public class daoServlet extends HttpServlet {
                                    //Make sure to use executeUpdate for any statement 
                                    //that does not return a result set.
                                    
+             
+                                 
+                                   
+                                   
        // check affected raw is greated than 0, then we have successfully updated the db                            
       if( rows>0){
             response.sendRedirect("index.jsp"); 
@@ -125,9 +178,9 @@ public class daoServlet extends HttpServlet {
             out.println("<h1>Error: " + e.getMessage() + "</h1>");
             out.println("</body></html>");
                   }    
-       
+     
     }
-    
+    }
     @Override
     public String getServletInfo() {
         return "Short description";
