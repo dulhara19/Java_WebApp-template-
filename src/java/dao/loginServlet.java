@@ -63,7 +63,8 @@ public class loginServlet extends HttpServlet {
         String dbPassword = "Lakshan2001mysql";
         
         String sql1 = "SELECT * FROM clientname WHERE cname = ? AND pass = ? ";
-
+        String adminsql = "SELECT * FROM admindata WHERE name = ? AND adminPass = ? ";
+        
          
         try {
             // Load MySQL JDBC Driver
@@ -74,12 +75,35 @@ public class loginServlet extends HttpServlet {
             
             // create statemenet
             PreparedStatement st= con.prepareStatement(sql1);
+            PreparedStatement st1= con.prepareStatement(adminsql);
             
+            // set param value to the sql query
             st.setString(1,lname);
             st.setString(2,lpassword);
             
             // creating resultset           
-            ResultSet rs= st.executeQuery();
+            ResultSet rs= st.executeQuery(sql1);
+            ResultSet rs1= st1.executeQuery(adminsql);
+            
+            //==============================
+            //==============================
+            
+            if(rs1.next() ){
+                
+               
+            // create statemenet
+            
+            }
+            st1.setString(1,lname);
+            st1.setString(2,lpassword);
+             
+            
+            //==============================
+            //==============================
+            
+            
+            
+           
       
            // Check if the result set has any rows and matching pass and name
             if (rs.next()) {
