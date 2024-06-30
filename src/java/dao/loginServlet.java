@@ -59,11 +59,11 @@ public class loginServlet extends HttpServlet {
          
          
         String jdbcURL = "jdbc:mysql://localhost:3306/clientdata";
-        String dbUser = "root"; 
+        String dbUser = "root";  
         String dbPassword = "Lakshan2001mysql";
         
         String sql1 = "SELECT * FROM clientname WHERE cname = ? AND pass = ? ";
-        String adminsql = "SELECT * FROM admindata WHERE name = ? AND adminPass = ? ";
+        String adminsql = "SELECT * FROM admindata WHERE  name = ? AND adminPass = ? ";
         
          
         try {
@@ -81,31 +81,21 @@ public class loginServlet extends HttpServlet {
             st.setString(1,lname);
             st.setString(2,lpassword);
             
-            // creating resultset           
-            ResultSet rs= st.executeQuery(sql1);
-            ResultSet rs1= st1.executeQuery(adminsql);
+            st1.setString(1,lname);
+            st1.setString(2,lpassword);
             
-            //==============================
-            //==============================
+            // creating resultset           
+            ResultSet rs= st.executeQuery();
+            ResultSet rs1= st1.executeQuery();
             
             if(rs1.next() ){
                 
-               
-            // create statemenet
+                  response.sendRedirect("adminDashBoard.jsp");
             
             }
-            st1.setString(1,lname);
-            st1.setString(2,lpassword);
-             
-            
-            //==============================
-            //==============================
-            
-            
-            
-           
-      
-           // Check if the result set has any rows and matching pass and name
+            else{   // if he is not a super admin then,
+                
+                 // Check if the result set has any rows and matching pass and name for users
             if (rs.next()) {
                 
                 // If valid credentials, redirect to success page
@@ -119,7 +109,8 @@ public class loginServlet extends HttpServlet {
                   request.getRequestDispatcher("registerlogin.jsp").forward(request, response);
                 
             }
-           
+           } 
+
         } catch(ClassNotFoundException | SQLException e){
             out.println("<html><body>");
             out.println("<h1>Error: " + e.getMessage() + "</h1>");
