@@ -1,92 +1,88 @@
+<%@ page import="java.util.List" %>
+<%@ page import="dao.AdminRequest" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Admin Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="container mt-5">
-        <h2>Super Admin Dashboard</h2>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="admin-requests">
-                    <!-- Sample data, replace with dynamic data from the database -->
-                    <tr>
-                        <td>John Doe</td>
-                        <td>john.doe@example.com</td>
-                        <td>123-456-7890</td>
-                        <td>
-                            <button class="btn btn-success" onclick="acceptAdmin(this)">Accept</button>
-                            <button class="btn btn-danger" onclick="deleteAdmin(this)">Delete</button>
-                        </td>
-                    </tr>
-                    <!-- More rows as needed -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
+    <title>Admin Requests</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script>
-        function acceptAdmin(button) {
-            // Get the row containing the button
-            var row = button.parentNode.parentNode;
-            // Extract admin details from the row
-            var name = row.cells[0].innerText;
-            var email = row.cells[1].innerText;
-            var phone = row.cells[2].innerText;
+        function submitForm(action, aid, name, phone, email) {
+            var form = document.createElement("form");
+            form.method = "post";
+            form.action = "adminRequests";
+            
+            var actionInput = document.createElement("input");
+            actionInput.type = "hidden";
+            actionInput.name = "action";
+            actionInput.value = action;
+            form.appendChild(actionInput);
+            
+            var aidInput = document.createElement("input");
+            aidInput.type = "hidden";
+            aidInput.name = "aid";
+            aidInput.value = aid;
+            form.appendChild(aidInput);
 
-            // Example AJAX call to backend servlet to accept admin request
-            $.ajax({
-                url: 'acceptAdminServlet',
-                type: 'POST',
-                data: {
-                    name: name,
-                    email: email,
-                    phone: phone
-                },
-                success: function(response) {
-                    // On success, remove the row from the table
-                    row.parentNode.removeChild(row);
-                },
-                error: function(error) {
-                    alert('Error accepting admin request.');
-                }
-            });
-        }
+            var nameInput = document.createElement("input");
+            nameInput.type = "";
+            nameInput.name = "name";
+            nameInput.value = name;
+            form.appendChild(nameInput);
 
-        function deleteAdmin(button) {
-            // Get the row containing the button
-            var row = button.parentNode.parentNode;
+            var phoneInput = document.createElement("input");
+            phoneInput.type = "hidden";
+            phoneInput.name = "phone";
+            phoneInput.value = phone;
+            form.appendChild(phoneInput);
 
-            // Example AJAX call to backend servlet to delete admin request
-            $.ajax({
-                url: 'deleteAdminServlet',
-                type: 'POST',
-                data: {
-                    email: row.cells[1].innerText // assuming email is unique
-                },
-                success: function(response) {
-                    // On success, remove the row from the table
-                    row.parentNode.removeChild(row);
-                },
-                error: function(error) {
-                    alert('Error deleting admin request.');
-                }
-            });
+            var emailInput = document.createElement("input");
+            emailInput.type = "hidden";
+            emailInput.name = "email";
+            emailInput.value = email;
+            form.appendChild(emailInput);
+
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Admin Requests</h2>  
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>AID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                    </tr>
+            </thead>
+            <tbody>
+                <%
+                    List<AdminRequest> adminRequestList = (List<AdminRequest>) request.getAttribute("adminRequestList");
+                    if (adminRequestList != null) {
+                        for (AdminRequest adminRequest : adminRequestList) {
+                %>
+                <tr>
+                    <td><%= adminRequest.getAid() %></td>
+                    <td><%= adminRequest.getName() %></td>
+                    <td><%= adminRequest.getPhone() %></td>
+                    <td><%= adminRequest.getEmail() %></td>
+                    <td>
+                        <button class="btn btn-success" onclick="submitForm('accept', '<%= adminRequest.getAid() %>', '<%= adminRequest.getName() %>', '<%= adminRequest.getPhone() %>', '<%= adminRequest.getEmail() %>')">Accept</button>
+                        <button class="btn btn-danger" onclick="submitForm('delete', '<%= adminRequest.getAid() %>', '', '', '')">Delete</button>
+                    </td>
+                </tr>
+                <%
+                        }
+                    }
+                %>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
